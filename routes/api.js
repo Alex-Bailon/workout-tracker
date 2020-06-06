@@ -1,6 +1,6 @@
 const express = require('express')
 const router = require('express').Router()
-const Workout = require("../models/workout")
+const Workout = require("../models/Workout")
 const path = require("path")
 
 router.get('/', function (req, res) {
