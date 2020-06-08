@@ -23,7 +23,6 @@ router.get("/api/workouts", (req,res) => {
   });
 });
 router.put("/api/workouts/:id", ({body,params},res) => {
-  console.log(body)
   Workout.findByIdAndUpdate(params.id,
     {
       $push: {
@@ -34,7 +33,19 @@ router.put("/api/workouts/:id", ({body,params},res) => {
       if (error) {
         res.send(error);
       } else {
-        res.send(data);
+        let totalDurationUpdate = data.totalDuration + body.duration
+        Workout.findByIdAndUpdate(params.id,
+          {
+            totalDuration: totalDurationUpdate
+          },
+          (err, newData) => {
+            if (err){
+              res.send(err)
+            } else {
+              res.send(data);
+            }
+          }
+        )
       }
     }
   );
